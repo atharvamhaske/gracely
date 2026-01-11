@@ -36,7 +36,7 @@ func main() {
 
 	jobQueue := make(chan string)
 
-	customHandler := CustomHandler(jobQueue)
+	customHandler := CustomHandler(jobQueue) //passing newly created jobQ channel in CustomHandler
 
 	r := mux.NewRouter()
 	r.Handle("/{jobName}", customHandler)
@@ -46,7 +46,7 @@ func main() {
 		Handler: r,
 	}
 
-	doneChan := make(chan interface{})
+	doneChan := make(chan any)
 	go consumer(ctx, jobQueue, doneChan)
 
 	go func() {
